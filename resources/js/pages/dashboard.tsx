@@ -1,9 +1,6 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { dashboard } from '@/routes';
-import Heading from '@/components/app/heading';
 import {
     Ticket,
-    Inbox,
     AlertCircle,
     Clock,
     CheckCircle2,
@@ -16,9 +13,12 @@ import {
     Zap,
     Plus,
 } from 'lucide-react';
-import * as ticketRoutes from '@/routes/api/tickets';
-import * as divisiRoutes from '@/routes/api/divisi';
-import * as issueCategoryRoutes from '@/routes/api/issue-categories';
+import React from 'react';
+import Heading from '@/components/app/heading';
+import type { CalendarEvent } from '@/components/tickets/calendar';
+import { TicketCalendar } from '@/components/tickets/calendar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
@@ -26,44 +26,13 @@ import {
     CardTitle,
     CardDescription,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { TicketCalendar, CalendarEvent } from '@/components/tickets/calendar';
-import React from 'react';
+import { dashboard } from '@/routes';
+import * as divisiRoutes from '@/routes/api/divisi';
+import * as issueCategoryRoutes from '@/routes/api/issue-categories';
+import * as ticketRoutes from '@/routes/api/tickets';
+import type { DashboardProps } from '@/types';
 
-interface TicketStats {
-    total: number;
-    unassigned: number;
-    by_status: {
-        value: string;
-        label: string;
-        color: string;
-        count: number;
-    }[];
-    by_priority: {
-        value: string;
-        label: string;
-        color: string;
-        count: number;
-    }[];
-    recent_tickets: {
-        id: number;
-        ticket_number: string;
-        subject: string;
-        user_name: string;
-        divisi_name: string;
-        status_label: string;
-        status_color: string;
-        created_at: string;
-    }[];
-    calendar_events: CalendarEvent[];
-}
-
-interface Props {
-    stats: TicketStats;
-}
-
-export default function Dashboard({ stats }: Props) {
+export default function Dashboard({ stats }: DashboardProps) {
     const byStatus = stats?.by_status || [];
     const byPriority = stats?.by_priority || [];
     const recentTickets = stats?.recent_tickets || [];
@@ -294,6 +263,7 @@ export default function Dashboard({ stats }: Props) {
                                                 getStatusColorClasses(
                                                     ticket.status_color,
                                                 );
+
                                             return (
                                                 <div
                                                     key={ticket.id}
@@ -395,6 +365,7 @@ export default function Dashboard({ stats }: Props) {
                                                         getStatusColorClasses(
                                                             ticket.status_color,
                                                         );
+
                                                     return (
                                                         <tr
                                                             key={ticket.id}
@@ -579,6 +550,7 @@ export default function Dashboard({ stats }: Props) {
                                                 getPriorityColorClasses(
                                                     prio.value,
                                                 );
+
                                             return (
                                                 <div
                                                     key={prio.value}

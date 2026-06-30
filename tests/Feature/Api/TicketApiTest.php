@@ -16,7 +16,9 @@ class TicketApiTest extends TestCase
     use LazilyRefreshDatabase;
 
     protected User $user;
+
     protected Divisi $divisi;
+
     protected IssueCategory $category;
 
     protected function setUp(): void

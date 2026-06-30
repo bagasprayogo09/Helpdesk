@@ -1,14 +1,14 @@
+import { Head, Link } from '@inertiajs/react';
+import { Plus } from 'lucide-react';
 import Heading from '@/components/app/heading';
 import { Pagination } from '@/components/pagination';
+import { TicketCard } from '@/components/tickets/ticket-card';
+import { TicketTable } from '@/components/tickets/ticket-table';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import * as ticketRoutes from '@/routes/api/tickets';
 
-import { TicketProps } from '@/types/ticket';
-import { Head, Link } from '@inertiajs/react';
-import { Plus } from 'lucide-react';
-import { TicketCard } from '@/components/tickets/ticket-card';
-import { TicketTable } from '@/components/tickets/ticket-table';
+import type { TicketProps } from '@/types';
 
 export default function TicketIndex({ tickets }: TicketProps) {
     return (

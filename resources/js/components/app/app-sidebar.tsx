@@ -22,9 +22,9 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { index as ticketsIndex } from '@/routes/tickets';
 import { index as divisisIndex } from '@/routes/divisis';
 import { index as issueCategoriesIndex } from '@/routes/issue-categories';
+import { index as ticketsIndex } from '@/routes/tickets';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -69,6 +69,7 @@ export function AppSidebar() {
     const isAdminOrSupervisor = role === 'admin' || role === 'supervisor';
 
     const menuItems = [...mainNavItems];
+
     if (isAdminOrSupervisor) {
         menuItems.push({
             title: 'Log Audit',

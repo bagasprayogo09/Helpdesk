@@ -14,19 +14,19 @@ class AuditLogService
     {
         $query = AuditLog::with('user')->latest();
 
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $query->where(
                 'description',
                 'like',
-                '%' . $filters['search'] . '%'
+                '%'.$filters['search'].'%'
             );
         }
 
-        if (!empty($filters['event'])) {
+        if (! empty($filters['event'])) {
             $query->where('event', $filters['event']);
         }
 
-        if (!empty($filters['type'])) {
+        if (! empty($filters['type'])) {
             match ($filters['type']) {
                 'ticket' => $query->where('auditable_type', Ticket::class),
                 'divisi' => $query->where('auditable_type', Divisi::class),

@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button';
-import * as ticketRoutes from '@/routes/tickets';
-import { Ticket } from '@/types/ticket';
 import { Link } from '@inertiajs/react';
 import { Building, Eye, Pencil, Tag, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import * as ticketRoutes from '@/routes/tickets';
+import type { Ticket } from '@/types';
 import { TicketPriorityBadge, TicketStatusBadge } from './ticket-badges';
 
 interface TicketTableProps {

@@ -8,19 +8,10 @@ import { Pagination } from '@/components/pagination';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import * as issueRoutes from '@/routes/api/issue-categories';
-import { Divisi, IssueCategory } from '@/types';
-
-interface PageProps extends Record<string, unknown> {
-    issueCategories: {
-        data: IssueCategory[];
-        links: any;
-        meta: any;
-    };
-    divisis: { data: Divisi[] };
-}
+import type { Divisi, IssueCategory, IssueCategoryPageProps } from '@/types';
 
 export default function IssueCategoryIndex() {
-    const { issueCategories, divisis } = usePage<PageProps>().props;
+    const { issueCategories, divisis } = usePage<IssueCategoryPageProps>().props;
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingCategory, setEditingCategory] =
         useState<IssueCategory | null>(null);

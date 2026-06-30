@@ -8,21 +8,3 @@ export interface User {
     created_at?: string;
     updated_at?: string;
 }
-
-export interface Divisi {
-    id: number;
-    name: string;
-    description: string | null;
-    created_at?: string;
-    updated_at?: string;
-}
-
-export interface IssueCategory {
-    id: number;
-    divisi_id: number;
-    name: string;
-    description: string | null;
-    divisi?: Divisi;
-    created_at?: string;
-    updated_at?: string;
-}

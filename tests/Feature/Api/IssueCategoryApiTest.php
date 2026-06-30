@@ -13,6 +13,7 @@ class IssueCategoryApiTest extends TestCase
     use LazilyRefreshDatabase;
 
     protected User $admin;
+
     protected Divisi $divisi;
 
     protected function setUp(): void

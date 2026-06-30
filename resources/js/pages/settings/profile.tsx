@@ -1,7 +1,7 @@
 import { Form, Head, usePage } from '@inertiajs/react';
 import ProfileController from '@/actions/App/Http/Controllers/Api/Settings/ProfileController';
-import DeleteUser from '@/components/auth/delete-user';
 import Heading from '@/components/app/heading';
+import DeleteUser from '@/components/auth/delete-user';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

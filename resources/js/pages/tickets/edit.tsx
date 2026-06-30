@@ -1,3 +1,6 @@
+import { Head, Link, Form, usePage } from '@inertiajs/react';
+import { ArrowLeft } from 'lucide-react';
+import React, { useState } from 'react';
 import Heading from '@/components/app/heading';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
@@ -12,74 +15,14 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import * as ticketRoutes from '@/routes/api/tickets';
-import { Head, Link, Form, usePage } from '@inertiajs/react';
-import { ArrowLeft } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
-
-interface Divisi {
-    id: number;
-    name: string;
-}
-
-interface IssueCategory {
-    id: number;
-    divisi_id: number;
-    name: string;
-}
-
-interface Agent {
-    id: number;
-    name: string;
-}
-
-interface Ticket {
-    id: number;
-    ticket_number: string;
-    subject: string;
-    description: string;
-    status: {
-        value: string;
-        label: string;
-        color: string;
-    };
-    priority: {
-        value: string;
-        label: string;
-        color: string;
-    };
-    user: {
-        id: number;
-        name: string;
-    };
-    divisi: {
-        id: number;
-        name: string;
-    };
-    issue_category: {
-        id: number;
-        name: string;
-    };
-    assigned_to: {
-        id: number;
-        name: string;
-    } | null;
-}
-
-interface Props {
-    ticket: {
-        data: Ticket;
-    };
-    divisis: Divisi[];
-    issue_categories: IssueCategory[];
-    agents: Agent[];
-}
+import type { TicketEditProps } from '@/types';
 
 export default function TicketEdit({
     ticket,
     divisis = [],
     issue_categories = [],
     agents = [],
-}: Props) {
+}: TicketEditProps) {
     const data = ticket.data;
     const { auth } = usePage().props as any;
     const userRole = auth?.user?.role;
@@ -90,9 +33,6 @@ export default function TicketEdit({
     const [selectedDivisi, setSelectedDivisi] = useState<string>(
         data.divisi.id.toString(),
     );
-    const [filteredCategories, setFilteredCategories] = useState<
-        IssueCategory[]
-    >([]);
     const [selectedCategory, setSelectedCategory] = useState<string>(
         data.issue_category.id.toString(),
     );
@@ -106,18 +46,10 @@ export default function TicketEdit({
         data.assigned_to?.id.toString() || 'none',
     );
 
-    // Filter categories when division changes
-    useEffect(() => {
-        if (selectedDivisi) {
-            const divisiId = parseInt(selectedDivisi);
-            const filtered = issue_categories.filter(
-                (cat) => cat.divisi_id === divisiId,
-            );
-            setFilteredCategories(filtered);
-        } else {
-            setFilteredCategories([]);
-        }
-    }, [selectedDivisi, issue_categories]);
+    const divisiId = selectedDivisi ? parseInt(selectedDivisi) : null;
+    const filteredCategories = divisiId
+        ? issue_categories.filter((cat) => cat.divisi_id === divisiId)
+        : [];
 
     return (
         <>
@@ -166,6 +98,7 @@ export default function TicketEdit({
                                                     ) &&
                                                 cat.divisi_id === divisiId,
                                         );
+
                                     if (!belongsToDivisi) {
                                         setSelectedCategory('');
                                     }

@@ -1,3 +1,6 @@
+import { Head, Link, Form } from '@inertiajs/react';
+import { ArrowLeft } from 'lucide-react';
+import React, { useState } from 'react';
 import Heading from '@/components/app/heading';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
@@ -12,51 +15,20 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import * as ticketRoutes from '@/routes/api/tickets';
-import { Head, Link, Form } from '@inertiajs/react';
-import { ArrowLeft, Plus } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
-
-interface Divisi {
-    id: number;
-    name: string;
-}
-
-interface IssueCategory {
-    id: number;
-    divisi_id: number;
-    name: string;
-}
-
-interface Props {
-    divisis: Divisi[];
-    issue_categories: IssueCategory[];
-}
+import type { TicketCreateProps } from '@/types';
 
 export default function TicketCreate({
     divisis = [],
     issue_categories = [],
-}: Props) {
+}: TicketCreateProps) {
     const [selectedDivisi, setSelectedDivisi] = useState<string>('');
-    const [filteredCategories, setFilteredCategories] = useState<
-        IssueCategory[]
-    >([]);
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [selectedPriority, setSelectedPriority] = useState<string>('medium');
 
-    // Filter categories when division changes
-    useEffect(() => {
-        if (selectedDivisi) {
-            const divisiId = parseInt(selectedDivisi);
-            const filtered = issue_categories.filter(
-                (cat) => cat.divisi_id === divisiId,
-            );
-            setFilteredCategories(filtered);
-            setSelectedCategory(''); // Reset category selection
-        } else {
-            setFilteredCategories([]);
-            setSelectedCategory('');
-        }
-    }, [selectedDivisi, issue_categories]);
+    const divisiId = selectedDivisi ? parseInt(selectedDivisi) : null;
+    const filteredCategories = divisiId
+        ? issue_categories.filter((cat) => cat.divisi_id === divisiId)
+        : [];
 
     return (
         <>
@@ -94,6 +66,7 @@ export default function TicketCreate({
                                 // Sync local state changes
                                 const handleDivisiChange = (val: string) => {
                                     setSelectedDivisi(val);
+                                    setSelectedCategory('');
                                 };
 
                                 const handleCategoryChange = (val: string) => {

@@ -15,18 +15,10 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import * as divisiRoutes from '@/routes/api/divisi';
-import { Divisi } from '@/types';
-
-interface PageProps extends Record<string, unknown> {
-    divisis: {
-        data: Divisi[];
-        links: any;
-        meta: any;
-    };
-}
+import type { Divisi, DivisiPageProps } from '@/types';
 
 export default function DivisiIndex() {
-    const { divisis } = usePage<PageProps>().props;
+    const { divisis } = usePage<DivisiPageProps>().props;
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingDivisi, setEditingDivisi] = useState<Divisi | null>(null);
 

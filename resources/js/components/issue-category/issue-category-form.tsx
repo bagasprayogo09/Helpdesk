@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Divisi, IssueCategory } from '@/types';
+import type { Divisi, IssueCategory } from '@/types';
 
 interface IssueCategoryFormProps {
     category: IssueCategory | null;

@@ -21,6 +21,7 @@ createInertiaApp({
         }
 
         const module = await page();
+
         return (module as any).default || module;
     },
     layout: (name) => {

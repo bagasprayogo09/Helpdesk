@@ -29,15 +29,19 @@ export function Pagination({ links, meta, className = '' }: PaginationProps) {
           ? meta.links
           : [];
 
-    if (resolvedLinks.length <= 3) return null; // Don't show pagination if there's only 1 page (prev, 1, next)
+    if (resolvedLinks.length <= 3) {
+return null;
+} // Don't show pagination if there's only 1 page (prev, 1, next)
 
     const cleanLabel = (label: string) => {
         if (label.includes('Previous')) {
             return <ChevronLeft className="h-4 w-4" />;
         }
+
         if (label.includes('Next')) {
             return <ChevronRight className="h-4 w-4" />;
         }
+
         return label;
     };
 

@@ -1,13 +1,4 @@
 import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    CardDescription,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import {
     ChevronLeft,
     ChevronRight,
     Calendar as CalendarIcon,
@@ -16,6 +7,14 @@ import {
     PlusCircle,
 } from 'lucide-react';
 import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from '@/components/ui/card';
 
 export interface CalendarEvent {
     id: string;
@@ -53,10 +52,12 @@ export function TicketCalendar({ events, compact = false }: CalendarProps) {
     const startDay = firstDayOfMonth(year, month);
 
     const days = [];
+
     // Padding for previous month
     for (let i = 0; i < startDay; i++) {
         days.push(null);
     }
+
     // Days of current month
     for (let i = 1; i <= numDays; i++) {
         days.push(i);
@@ -64,6 +65,7 @@ export function TicketCalendar({ events, compact = false }: CalendarProps) {
 
     const getEventsForDay = (day: number) => {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
         return events.filter((event) => event.date === dateStr);
     };
 
@@ -96,6 +98,7 @@ export function TicketCalendar({ events, compact = false }: CalendarProps) {
     const selectedDateEvents = selectedDate
         ? events.filter((event) => {
               const dateStr = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+
               return event.date === dateStr;
           })
         : [];

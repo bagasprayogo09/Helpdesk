@@ -1,8 +1,3 @@
-import Heading from '@/components/app/heading';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import * as ticketRoutes from '@/routes/tickets';
 import { Head, Link } from '@inertiajs/react';
 import {
     Building,
@@ -14,51 +9,14 @@ import {
     Pencil,
     ShieldAlert,
 } from 'lucide-react';
+import Heading from '@/components/app/heading';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import * as ticketRoutes from '@/routes/tickets';
+import type { TicketShowProps } from '@/types';
 
-interface Ticket {
-    id: number;
-    ticket_number: string;
-    subject: string;
-    description: string;
-    status: {
-        value: string;
-        label: string;
-        color: string;
-    };
-    priority: {
-        value: string;
-        label: string;
-        color: string;
-    };
-    user: {
-        id: number;
-        name: string;
-    };
-    divisi: {
-        id: number;
-        name: string;
-    };
-    issue_category: {
-        id: number;
-        name: string;
-    };
-    assigned_to: {
-        id: number;
-        name: string;
-    } | null;
-    resolved_at: string | null;
-    closed_at: string | null;
-    created_at: string;
-    updated_at: string;
-}
-
-interface Props {
-    ticket: {
-        data: Ticket;
-    };
-}
-
-export default function TicketShow({ ticket }: Props) {
+export default function TicketShow({ ticket }: TicketShowProps) {
     const data = ticket.data;
 
     const getStatusColor = (color: string) => {

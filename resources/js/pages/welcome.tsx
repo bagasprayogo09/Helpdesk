@@ -1,8 +1,8 @@
-import AppLogoIcon from '@/components/app/app-logo-icon';
-import { dashboard, login, register } from '@/routes';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Facebook, Github, Instagram, Mail, Twitter } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import AppLogoIcon from '@/components/app/app-logo-icon';
+import { dashboard, login, register } from '@/routes';
 
 interface TimeLeft {
     days: number;

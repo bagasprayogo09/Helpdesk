@@ -1,5 +1,5 @@
 import { Head, router, usePage } from '@inertiajs/react';
-import { History, Search, Eye, Filter, Info, ShieldAlert, X, Shield, Globe } from 'lucide-react';
+import { History, Search, Eye } from 'lucide-react';
 import React, { useState } from 'react';
 import Heading from '@/components/app/heading';
 import { Pagination } from '@/components/pagination';
@@ -15,37 +15,10 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 
-interface AuditLog {
-    id: number;
-    user_id: number | null;
-    user_name: string;
-    event: string;
-    auditable_type: string;
-    auditable_id: number;
-    old_values: Record<string, any> | null;
-    new_values: Record<string, any> | null;
-    description: string;
-    ip_address: string | null;
-    user_agent: string | null;
-    created_at: string;
-    created_at_human: string;
-}
-
-interface PageProps extends Record<string, unknown> {
-    logs: {
-        data: AuditLog[];
-        links: any;
-        meta: any;
-    };
-    filters: {
-        search?: string;
-        event?: string;
-        type?: string;
-    };
-}
+import type { AuditLog, AuditLogPageProps } from '@/types';
 
 export default function AuditLogsIndex() {
-    const { logs, filters } = usePage<PageProps>().props;
+    const { logs, filters } = usePage<AuditLogPageProps>().props;
     const [searchValue, setSearchValue] = useState(filters.search || '');
     const [selectedLog, setSelectedLog] = useState<AuditLog | null>(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -54,6 +27,7 @@ export default function AuditLogsIndex() {
 
     const handleFilterChange = (key: string, value: string) => {
         const currentParams: Record<string, any> = { ...filters };
+
         if (value && value !== 'all') {
             currentParams[key] = value;
         } else {
@@ -76,6 +50,7 @@ export default function AuditLogsIndex() {
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const currentParams = { ...filters };
+
         if (searchValue) {
             currentParams.search = searchValue;
         } else {
@@ -125,9 +100,18 @@ export default function AuditLogsIndex() {
     };
 
     const formatValue = (val: any): string => {
-        if (val === null || val === undefined) return 'NULL';
-        if (typeof val === 'boolean') return val ? 'TRUE' : 'FALSE';
-        if (typeof val === 'object') return JSON.stringify(val);
+        if (val === null || val === undefined) {
+return 'NULL';
+}
+
+        if (typeof val === 'boolean') {
+return val ? 'TRUE' : 'FALSE';
+}
+
+        if (typeof val === 'object') {
+return JSON.stringify(val);
+}
+
         return String(val);
     };
 
@@ -137,7 +121,10 @@ export default function AuditLogsIndex() {
     const renderChanges = (log: AuditLog) => {
         if (log.event === 'updated' && log.old_values && log.new_values) {
             const keys = Object.keys(log.new_values).filter(k => !ignoredKeys.includes(k));
-            if (keys.length === 0) return <p className="text-xs text-gray-500 font-medium">Hanya perubahan metadata internal.</p>;
+
+            if (keys.length === 0) {
+return <p className="text-xs text-gray-500 font-medium">Hanya perubahan metadata internal.</p>;
+}
 
             return (
                 <div className="space-y-3">
@@ -150,6 +137,7 @@ export default function AuditLogsIndex() {
                         {keys.map((key) => {
                             const oldVal = formatValue(log.old_values?.[key]);
                             const newVal = formatValue(log.new_values?.[key]);
+
                             return (
                                 <div key={key} className="grid grid-cols-3 gap-4 pt-2.5 text-xs">
                                     <div className="font-mono font-bold text-gray-700 dark:text-gray-300">{key}</div>
@@ -169,6 +157,7 @@ export default function AuditLogsIndex() {
 
         if (log.event === 'created' && log.new_values) {
             const keys = Object.keys(log.new_values).filter(k => !ignoredKeys.includes(k));
+
             return (
                 <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-4 border-b border-gray-150 pb-2 text-[10px] font-black uppercase tracking-wider text-gray-400 dark:border-b-white/5">
@@ -178,6 +167,7 @@ export default function AuditLogsIndex() {
                     <div className="divide-y divide-gray-50 dark:divide-white/5 space-y-2.5">
                         {keys.map((key) => {
                             const newVal = formatValue(log.new_values?.[key]);
+
                             return (
                                 <div key={key} className="grid grid-cols-2 gap-4 pt-2.5 text-xs">
                                     <div className="font-mono font-bold text-gray-700 dark:text-gray-300">{key}</div>
@@ -194,6 +184,7 @@ export default function AuditLogsIndex() {
 
         if (log.event === 'deleted' && log.old_values) {
             const keys = Object.keys(log.old_values).filter(k => !ignoredKeys.includes(k));
+
             return (
                 <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-4 border-b border-gray-150 pb-2 text-[10px] font-black uppercase tracking-wider text-gray-400 dark:border-b-white/5">
@@ -203,6 +194,7 @@ export default function AuditLogsIndex() {
                     <div className="divide-y divide-gray-50 dark:divide-white/5 space-y-2.5">
                         {keys.map((key) => {
                             const oldVal = formatValue(log.old_values?.[key]);
+
                             return (
                                 <div key={key} className="grid grid-cols-2 gap-4 pt-2.5 text-xs">
                                     <div className="font-mono font-bold text-gray-700 dark:text-gray-300">{key}</div>

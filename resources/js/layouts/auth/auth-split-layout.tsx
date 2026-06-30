@@ -1,8 +1,8 @@
 import { Link, usePage } from '@inertiajs/react';
+import { Mail } from 'lucide-react';
 import AppLogoIcon from '@/components/app/app-logo-icon';
 import { home } from '@/routes';
 import type { AuthLayoutProps } from '@/types';
-import { Mail } from 'lucide-react';
 
 export default function AuthSplitLayout({
     children,
